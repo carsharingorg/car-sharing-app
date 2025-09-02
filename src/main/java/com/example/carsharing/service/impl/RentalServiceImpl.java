@@ -4,6 +4,7 @@ import com.example.carsharing.dto.rental.RentalRequestDto;
 import com.example.carsharing.dto.rental.RentalResponseDto;
 import com.example.carsharing.exception.AccessDeniedException;
 import com.example.carsharing.exception.EntityNotFoundException;
+import com.example.carsharing.exception.IllegalArgumentException;
 import com.example.carsharing.mapper.RentalMapper;
 import com.example.carsharing.model.car.Car;
 import com.example.carsharing.model.rental.Rental;
@@ -12,6 +13,7 @@ import com.example.carsharing.repository.car.CarRepository;
 import com.example.carsharing.repository.rental.RentalRepository;
 import com.example.carsharing.repository.user.UserRepository;
 import com.example.carsharing.service.RentalService;
+import com.example.carsharing.telegram.notification.NotificationService;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -27,6 +29,7 @@ public class RentalServiceImpl implements RentalService {
     private final RentalMapper rentalMapper;
     private final CarRepository carRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     @Override
     public RentalResponseDto addRental(Long currentUserId, RentalRequestDto requestDto) {
@@ -51,7 +54,9 @@ public class RentalServiceImpl implements RentalService {
         rental.setUser(user);
         car.setInventory(car.getInventory() - 1);
         carRepository.save(car);
-        return rentalMapper.toDto(rentalRepository.save(rental));
+        Rental savedRental = rentalRepository.save(rental);
+        notificationService.sendRentalCreatedNotification(savedRental, user, car.getModel());
+        return rentalMapper.toDto(savedRental);
     }
 
     @Override
@@ -75,7 +80,9 @@ public class RentalServiceImpl implements RentalService {
         car.setInventory(car.getInventory() + 1);
         carRepository.save(car);
         rental.setActualReturnDate(LocalDate.now());
-        return rentalMapper.toDto(rentalRepository.save(rental));
+        Rental savedRental = rentalRepository.save(rental);
+        notificationService.sendRentalReturnedNotification(rental, car.getModel());
+        return rentalMapper.toDto(savedRental);
     }
 
     @Override
