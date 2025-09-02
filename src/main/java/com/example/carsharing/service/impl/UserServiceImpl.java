@@ -41,8 +41,7 @@ public class UserServiceImpl implements UserService {
                 () -> new EntityNotFoundException("Can't find role for user: "
                         + user.getUsername() + ", role: " + RoleName.ROLE_CUSTOMER));
         user.setRoles(Set.of(userRole));
-        userRepository.save(user);
-        return null;
+        return userMapper.toDto(userRepository.save(user));
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.example.carsharing.service.impl;
 
 import com.example.carsharing.dto.rental.RentalRequestDto;
 import com.example.carsharing.dto.rental.RentalResponseDto;
-import com.example.carsharing.dto.rental.RentalSearchParametersDto;
 import com.example.carsharing.exception.AccessDeniedException;
 import com.example.carsharing.exception.EntityNotFoundException;
 import com.example.carsharing.mapper.RentalMapper;
@@ -11,14 +10,12 @@ import com.example.carsharing.model.rental.Rental;
 import com.example.carsharing.model.user.User;
 import com.example.carsharing.repository.car.CarRepository;
 import com.example.carsharing.repository.rental.RentalRepository;
-import com.example.carsharing.repository.rental.RentalSpecificationBuilder;
 import com.example.carsharing.repository.user.UserRepository;
 import com.example.carsharing.service.RentalService;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,21 +23,10 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class RentalServiceImpl implements RentalService {
-    private final RentalSpecificationBuilder rentalSpecificationBuilder;
     private final RentalRepository rentalRepository;
     private final RentalMapper rentalMapper;
     private final CarRepository carRepository;
     private final UserRepository userRepository;
-
-    @Override
-    public List<RentalResponseDto> search(RentalSearchParametersDto searchParameters) {
-        Specification<Rental> rentalSpecification =
-                rentalSpecificationBuilder.build(searchParameters);
-        return rentalRepository.findAll(rentalSpecification)
-                .stream()
-                .map(rentalMapper::toDto)
-                .toList();
-    }
 
     @Override
     public RentalResponseDto addRental(Long currentUserId, RentalRequestDto requestDto) {
@@ -90,5 +76,14 @@ public class RentalServiceImpl implements RentalService {
         carRepository.save(car);
         rental.setActualReturnDate(LocalDate.now());
         return rentalMapper.toDto(rentalRepository.save(rental));
+    }
+
+    @Override
+    public List<RentalResponseDto> findAllByUserIdAndIsActive(Long userId, boolean isActive) {
+        List<Rental> rentals = rentalRepository.findAllByUserId(userId);
+        return rentals.stream()
+                .filter(r -> r.isActive() == isActive)
+                .map(rentalMapper::toDto)
+                .toList();
     }
 }

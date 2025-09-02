@@ -7,6 +7,8 @@ import com.example.carsharing.dto.user.UserResponseDto;
 import com.example.carsharing.exception.RegistrationException;
 import com.example.carsharing.security.AuthenticationServiceImpl;
 import com.example.carsharing.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Authentication", description = "Endpoints for user registration and authentication")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
@@ -21,12 +24,15 @@ public class AuthenticationController {
     private final UserService userService;
     private final AuthenticationServiceImpl authenticationService;
 
+    @Operation(summary = "Register a user", description = "Registers a new user in the system")
     @PostMapping("/register")
     public UserResponseDto register(@RequestBody @Valid UserRegisterDto registerDto)
             throws RegistrationException {
         return userService.register(registerDto);
     }
 
+    @Operation(summary = "Login a user", description = "Login a user by email"
+            + " and password and return JWT token")
     @PostMapping("/login")
     public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto requestDto) {
         return authenticationService.authenticate(requestDto);

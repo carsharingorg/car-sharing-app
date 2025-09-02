@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,4 +42,9 @@ public class Rental {
     private User user;
     @Column(columnDefinition = "TINYINT(1)")
     private boolean isDeleted = false;
+
+    @Transient
+    public boolean isActive() {
+        return actualReturnDate == null;
+    }
 }

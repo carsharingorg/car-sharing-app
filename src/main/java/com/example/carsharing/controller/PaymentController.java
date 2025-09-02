@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping
-    //@PreAuthorize("hasRole('CUSTOMER')")
+    @PreAuthorize("hasRole('CUSTOMER')")
     @Operation(summary = "Create payment session",
             description = "Create a new Stripe payment session")
     public PaymentResponseDto createPaymentSession(
@@ -33,13 +34,14 @@ public class PaymentController {
     }
 
     @GetMapping
-    //@PreAuthorize("hasRole('CUSTOMER') or hasRole('MANAGER')")
+    @PreAuthorize("hasRole('CUSTOMER') or hasRole('MANAGER')")
     @Operation(summary = "Get payments by user ID",
             description = "Get all payments for a specific user")
     public List<PaymentResponseDto> getPayments(@RequestParam Long userId) {
         return paymentService.getPaymentsByUserId(userId);
     }
 
+    @PreAuthorize("hasRole('CUSTOMER') or hasRole('MANAGER')")
     @GetMapping("/success/{sessionId}")
     @Operation(summary = "Handle successful payment",
             description = "Stripe redirect endpoint for successful payments")
@@ -47,6 +49,7 @@ public class PaymentController {
         return paymentService.handleSuccessfulPayment(sessionId);
     }
 
+    @PreAuthorize("hasRole('CUSTOMER') or hasRole('MANAGER')")
     @GetMapping("/cancel/{sessionId}")
     @Operation(summary = "Handle cancelled payment",
             description = "Stripe redirect endpoint for cancelled payments")
