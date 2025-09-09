@@ -2,6 +2,7 @@ package com.example.carsharing.service.impl;
 
 import com.example.carsharing.dto.payment.PaymentRequestDto;
 import com.example.carsharing.dto.payment.PaymentResponseDto;
+import com.example.carsharing.exception.CustomStripeException;
 import com.example.carsharing.exception.EntityNotFoundException;
 import com.example.carsharing.mapper.PaymentMapper;
 import com.example.carsharing.model.payment.Payment;
@@ -62,9 +63,11 @@ public class PaymentServiceImpl implements PaymentService {
             Payment savedPayment = paymentRepository.save(payment);
             return paymentMapper.toDto(savedPayment);
         } catch (StripeException e) {
-            throw new RuntimeException("Failed to create Stripe session: " + e.getMessage(), e);
+            throw new CustomStripeException("Failed to create Stripe session: "
+                    + e.getMessage(), e) {
+            };
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Invalid session URL from Stripe", e);
+            throw new CustomStripeException("Invalid session URL from Stripe", e);
         }
     }
 

@@ -64,6 +64,12 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
                 HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CustomStripeException.class)
+    public ResponseEntity<String> handleCustomStripeException(CustomStripeException ex) {
+        return new ResponseEntity<>(ex.getMessage(),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     private String getErrorsMessage(ObjectError e) {
         if (e instanceof FieldError fieldError) {
             String field = fieldError.getField();
