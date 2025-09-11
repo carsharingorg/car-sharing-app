@@ -1,15 +1,15 @@
 package com.example.carsharing.service.impl;
 
-import static com.example.carsharing.util.PaymentTestUtil.createDefaultPayment;
-import static com.example.carsharing.util.PaymentTestUtil.createDefaultPaymentResponseDto;
-import static com.example.carsharing.util.PaymentTestUtil.createFineRequestDto;
-import static com.example.carsharing.util.PaymentTestUtil.createOverdueRental;
-import static com.example.carsharing.util.PaymentTestUtil.createPaidPaymentResponseDto;
-import static com.example.carsharing.util.PaymentTestUtil.createPaymentRequestDto;
-import static com.example.carsharing.util.PaymentTestUtil.createPendingPayment;
-import static com.example.carsharing.util.PaymentTestUtil.createRentalForPayment;
-import static com.example.carsharing.util.PaymentTestUtil.createSecondPayment;
-import static com.example.carsharing.util.PaymentTestUtil.createSecondPaymentResponseDto;
+import static com.example.carsharing.util.PaymentUtil.createDefaultPayment;
+import static com.example.carsharing.util.PaymentUtil.createDefaultPaymentResponseDto;
+import static com.example.carsharing.util.PaymentUtil.createFineRequestDto;
+import static com.example.carsharing.util.PaymentUtil.createOverdueRental;
+import static com.example.carsharing.util.PaymentUtil.createPaidPaymentResponseDto;
+import static com.example.carsharing.util.PaymentUtil.createPaymentRequestDto;
+import static com.example.carsharing.util.PaymentUtil.createPendingPayment;
+import static com.example.carsharing.util.PaymentUtil.createRentalForPayment;
+import static com.example.carsharing.util.PaymentUtil.createSecondPayment;
+import static com.example.carsharing.util.PaymentUtil.createSecondPaymentResponseDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -204,11 +204,11 @@ class PaymentServiceImplTest {
         when(paymentMapper.toDto(payments.get(0))).thenReturn(expectedDtos.get(0));
         when(paymentMapper.toDto(payments.get(1))).thenReturn(expectedDtos.get(1));
 
-        List<PaymentResponseDto> actualDtos = paymentService.getPaymentsByUserId(userId);
+        List<PaymentResponseDto> actualDto = paymentService.getPaymentsByUserId(userId);
 
-        assertNotNull(actualDtos);
-        assertEquals(2, actualDtos.size());
-        assertEquals(expectedDtos, actualDtos);
+        assertNotNull(actualDto);
+        assertEquals(2, actualDto.size());
+        assertEquals(expectedDtos, actualDto);
         verify(paymentRepository).findAllByUserId(userId);
         verify(paymentMapper, times(2)).toDto(any(Payment.class));
     }

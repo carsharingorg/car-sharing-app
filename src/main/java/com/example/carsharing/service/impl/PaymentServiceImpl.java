@@ -86,9 +86,8 @@ public class PaymentServiceImpl implements PaymentService {
                         + "with session ID: " + sessionId));
 
         payment.setStatus(Status.PAID);
-        Payment savedPayment = paymentRepository.save(payment);
-
-        return paymentMapper.toDto(savedPayment);
+        paymentRepository.save(payment);
+        return paymentMapper.toDto(payment);
     }
 
     @Override

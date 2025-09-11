@@ -1,12 +1,12 @@
 package com.example.carsharing.service.impl;
 
-import static com.example.carsharing.util.TestUtil.createDefaultRole;
-import static com.example.carsharing.util.TestUtil.createDefaultUser;
-import static com.example.carsharing.util.TestUtil.createDefaultUserProfileDto;
-import static com.example.carsharing.util.TestUtil.createDefaultUserProfilePatchDto;
-import static com.example.carsharing.util.TestUtil.createDefaultUserRegisterDto;
-import static com.example.carsharing.util.TestUtil.createDefaultUserResponseDto;
-import static com.example.carsharing.util.TestUtil.createManagerRole;
+import static com.example.carsharing.util.UserUtil.createDefaultRole;
+import static com.example.carsharing.util.UserUtil.createDefaultUser;
+import static com.example.carsharing.util.UserUtil.createDefaultUserProfileDto;
+import static com.example.carsharing.util.UserUtil.createDefaultUserProfilePatchDto;
+import static com.example.carsharing.util.UserUtil.createDefaultUserRegisterDto;
+import static com.example.carsharing.util.UserUtil.createDefaultUserResponseDto;
+import static com.example.carsharing.util.UserUtil.createManagerRole;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;

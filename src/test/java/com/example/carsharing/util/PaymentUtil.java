@@ -1,8 +1,8 @@
 package com.example.carsharing.util;
 
-import static com.example.carsharing.util.TestUtil.createDefaultRental;
-import static com.example.carsharing.util.TestUtil.createDefaultUser;
-import static com.example.carsharing.util.TestUtil.createSecondDefaultCar;
+import static com.example.carsharing.util.CarUtil.createSecondDefaultCar;
+import static com.example.carsharing.util.RentalUtil.createDefaultRental;
+import static com.example.carsharing.util.UserUtil.createDefaultUser;
 
 import com.example.carsharing.dto.payment.PaymentRequestDto;
 import com.example.carsharing.dto.payment.PaymentResponseDto;
@@ -15,8 +15,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 
-public class PaymentTestUtil {
-    private PaymentTestUtil() {
+public class PaymentUtil {
+    private PaymentUtil() {
     }
 
     public static Payment createDefaultPayment() {
@@ -71,8 +71,8 @@ public class PaymentTestUtil {
     public static Rental createOverdueRental() {
         Rental rental = createDefaultRental();
         rental.setRentalDate(LocalDate.now().minusDays(10));
-        rental.setReturnDate(LocalDate.now().minusDays(5)); // Should have returned 5 days ago
-        rental.setActualReturnDate(LocalDate.now().minusDays(2)); // Returned 3 days late
+        rental.setReturnDate(LocalDate.now().minusDays(5));
+        rental.setActualReturnDate(LocalDate.now().minusDays(2));
         return rental;
     }
 

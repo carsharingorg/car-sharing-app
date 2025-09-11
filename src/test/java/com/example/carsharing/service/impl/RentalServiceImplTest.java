@@ -1,14 +1,14 @@
 package com.example.carsharing.service.impl;
 
-import static com.example.carsharing.util.TestUtil.createActiveRental;
-import static com.example.carsharing.util.TestUtil.createClosedRental;
-import static com.example.carsharing.util.TestUtil.createDefaultCar;
-import static com.example.carsharing.util.TestUtil.createDefaultRental;
-import static com.example.carsharing.util.TestUtil.createDefaultRentalRequestDto;
-import static com.example.carsharing.util.TestUtil.createDefaultRentalResponseDto;
-import static com.example.carsharing.util.TestUtil.createDefaultUser;
-import static com.example.carsharing.util.TestUtil.createInvalidReturnDateRentalRequestDto;
-import static com.example.carsharing.util.TestUtil.createPastDateRentalRequestDto;
+import static com.example.carsharing.util.CarUtil.createDefaultCar;
+import static com.example.carsharing.util.RentalUtil.createActiveRental;
+import static com.example.carsharing.util.RentalUtil.createClosedRental;
+import static com.example.carsharing.util.RentalUtil.createDefaultRental;
+import static com.example.carsharing.util.RentalUtil.createDefaultRentalRequestDto;
+import static com.example.carsharing.util.RentalUtil.createDefaultRentalResponseDto;
+import static com.example.carsharing.util.RentalUtil.createInvalidReturnDateRentalRequestDto;
+import static com.example.carsharing.util.RentalUtil.createPastDateRentalRequestDto;
+import static com.example.carsharing.util.UserUtil.createDefaultUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;

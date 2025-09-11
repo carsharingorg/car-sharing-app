@@ -1,10 +1,10 @@
 package com.example.carsharing.service.impl;
 
-import static com.example.carsharing.util.TestUtil.createDefaultCar;
-import static com.example.carsharing.util.TestUtil.createDefaultCarRequestDto;
-import static com.example.carsharing.util.TestUtil.createDefaultCarResponseDto;
-import static com.example.carsharing.util.TestUtil.createUpdatedDefaultCarRequestDto;
-import static com.example.carsharing.util.TestUtil.createUpdatedDefaultCarResponseDto;
+import static com.example.carsharing.util.CarUtil.createDefaultCar;
+import static com.example.carsharing.util.CarUtil.createDefaultCarRequestDto;
+import static com.example.carsharing.util.CarUtil.createDefaultCarResponseDto;
+import static com.example.carsharing.util.CarUtil.createUpdatedDefaultCarRequestDto;
+import static com.example.carsharing.util.CarUtil.createUpdatedDefaultCarResponseDto;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
