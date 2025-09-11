@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-users-table
+      author: vlad
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: first_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: email, value: "manager@example.com" }
+              - column: { name: password, value: "$2y$10$C/mgOCe4kPnVznzby9ZRu.7sWAWqTDOkU85iJFn9LRnGCjGLl/TbS" } #securePassword123
+              - column: { name: first_name, value: "Manager" }
+              - column: { name: last_name, value: "Manager" }
+              - column: { name: is_deleted, valueBoolean: false }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: email, value: "customer@example.com" }
+              - column: { name: password, value: "$2y$10$C/mgOCe4kPnVznzby9ZRu.7sWAWqTDOkU85iJFn9LRnGCjGLl/TbS" } #securePassword123
+              - column: { name: first_name, value: "Customer" }
+              - column: { name: last_name, value: "Customer" }
+              - column: { name: is_deleted, valueBoolean: false }
